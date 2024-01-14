@@ -161,21 +161,6 @@ func SetHistory(login, pswrd, link string) {
 	log.Println("History was updated")
 } // Функция добавляющая в историю загрузок новую ссылку
 
-func BoolToJWT(b bool) string {
-	tokeExpiresAt := time.Now().Add(time.Minute * time.Duration(1))
-	user := jwt.MapClaims{
-		"IsInDB":     b,
-		"Expires_at": tokeExpiresAt.Unix(),
-	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, user)
-	tokenString, err := token.SignedString([]byte(JWTCODE))
-	if err != nil { // проверяем ошибку если она есть
-		log.Println(err)
-		return ""
-	}
-	return tokenString
-} // Функция для создания JWT токена с булевым значением для оповещения о том есть ли данные пользователя в БД
-
 func HistoryToJWT(x []string) string {
 	tokeExpiresAt := time.Now().Add(time.Minute * time.Duration(1))
 	user := jwt.MapClaims{
